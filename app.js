@@ -10,6 +10,11 @@ import cors from 'cors';
 import xss from 'xss-clean';
 import rateLimit from 'express-rate-limit';
 
+// swagger
+import swaggerUI from 'swagger-ui-express';
+import YAML from 'yamljs';
+const swaggerDocument = YAML.load('./swagger.yaml')
+
 //connectDB
 import connectDB from './db/connect.js';
 import authenticateUser from './middleware/authentication.js';
@@ -32,12 +37,14 @@ app.use(helmet());
 app.use(cors());
 app.use(xss());
 
+app.get('/', (req, res) => {
+  res.send('<h1>Calorie Tracker API</h1><h2><a href="/api-docs">Documentation</a></h2>');
+});
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+
 // routes
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/food-items', authenticateUser, foodItemsRouter);
-app.get('/', (req, res) => {
-  res.send('Calorie Tracker API');
-});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

@@ -1,35 +1,47 @@
 import FoodItem from "../models/FoodItem.js";
 import { StatusCodes } from 'http-status-codes';
-import { BadRequestError } from '../errors/index.js';
+import { NotFoundError } from '../errors/index.js';
 
-const getAllFoodItems = (req, res) => {
-  res.send('get all food items');
+const getAllFoodItems = async (req, res) => {
+  const foodItems = await FoodItem.find({ createdBy: req.user.userID }).sort('createdAt');
+  res.status(StatusCodes.OK).json({ count: foodItems.length, foodItems });
 };
 
-const getFoodItem = (req, res) => {
-  res.send('get food item');
+const getFoodItem = async (req, res) => {
+  const { user: { userID }, params: { id: foodItemId } } = req;
+  const foodItem = await FoodItem.findOne({ _id: foodItemId, createdBy: userID });
+
+  if (!foodItem) {
+    throw new NotFoundError(`No Food Item with ID : ${foodItemId} at user ${userID}`);
+  };
+  res.status(StatusCodes.OK).json({ foodItem });
 };
 
 const createFoodItem = async (req, res) => {
   req.body.createdBy = req.user.userID;
-  let foodItem;
-  try {
-    foodItem = await FoodItem.create(req.body);
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      const errorMessage = Object.values(error.errors).map(val => val.message);
-      throw new BadRequestError(`Invalid food item data submitted: ${errorMessage.join(', ')}`);
-    };
-  };
+  const foodItem = await FoodItem.create(req.body);
   res.status(StatusCodes.CREATED).json({ foodItem });
 };
 
-const updateFoodItem = (req, res) => {
-  res.send('update food item');
+const updateFoodItem = async (req, res) => {
+  const { user: { userID }, params: { id: foodItemId } } = req;
+  const foodItem = await FoodItem.findOneAndUpdate({ _id: foodItemId, createdBy: userID }, req.body, {
+    new: true,
+    runValidators: true
+  });
+  if (!foodItem) {
+    throw new NotFoundError(`No Food Item with ID : ${foodItemId} at user ${userID}`);
+  };
+  res.status(StatusCodes.OK).json({ foodItem });
 };
 
-const deleteFoodItem = (req, res) => {
-  res.send('delete food item');
+const deleteFoodItem = async (req, res) => {
+  const { user: { userID }, params: { id: foodItemId } } = req;
+  const foodItem = await FoodItem.findOneAndDelete({ _id: foodItemId, createdBy: userID });
+  if (!foodItem) {
+    throw new NotFoundError(`No foodItem with ID : ${foodItemId} at user ${userID}`);
+  };
+  res.status(StatusCodes.OK).json({ msg: `Food Item ${foodItemId} deleted successfully` });
 };
 
 export { getAllFoodItems, getFoodItem, createFoodItem, updateFoodItem, deleteFoodItem };

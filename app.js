@@ -39,10 +39,6 @@ app.get('/', (req, res) => {
   res.send('Calorie Tracker API');
 });
 
-app.get('/api/v1/auth/login', (req, res) => {
-  res.send('API V1 Auth Test');
-});
-
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 

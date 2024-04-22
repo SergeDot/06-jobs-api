@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 const FoodItemSchema = new mongoose.Schema(
-  // field validations
   {
     name: {
       type: String,

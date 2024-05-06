@@ -88,7 +88,6 @@ export const showFoodItems = async () => {
         };
         let totalRow = document.createElement('tr');
         totalRow.innerHTML = `<td colspan="9" id="table-row-total">Total calories: ${totalCalories}</td>`;
-        // children.push(totalRowHTML)
         foodItemsTable.replaceChildren(...children);
         foodItemsTable.appendChild(totalRow)
       }

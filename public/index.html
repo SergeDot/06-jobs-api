@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+    integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link href="css/index.css" rel="stylesheet">
+  <title>Calorie Tracker</title>
+</head>
+
+<body>
+  <header>
+    <h1>Calorie Tracker</h1>
+  </header>
+  <main>
+    <hr />
+    <p id="message"></p>
+    <hr />
+    <div id="logon-register" style="display:none;">
+      <button type="button" id="logon">logon</button>
+      <button type="button" id="register">register</button>
+    </div>
+    <div id="logon-div" style="display:none;">
+      <form class="logon-register">
+        <div class="logon-register-field">
+          <label for="email">email:</label>
+          <input type="email" id="email" />
+        </div>
+        <div class="logon-register-field">
+          <label for="password">password:</label>
+          <input type="password" id="password" />
+        </div>
+        <div class="login-register-form-buttons">
+          <button type="button" id="logon-button">logon</button>
+          <button type="button" id="logon-cancel">cancel</button>
+        </div>
+      </form>
+    </div>
+    <div id="register-div" style="display:none;">
+      <form class="logon-register">
+        <div class="logon-register-field">
+          <label for="name">name:</label>
+          <input type="text" id="name" />
+        </div>
+        <div class="logon-register-field">
+          <label for="email1">email:</label>
+          <input type="email" id="email1" />
+        </div>
+        <div class="logon-register-field">
+          <label for="password1">password:</label>
+          <input type="password" id="password1" />
+        </div>
+        <div class="logon-register-field">
+          <label for="password2">verify password:</label>
+          <input type="password" id="password2" />
+        </div>
+        <div class="login-register-form-buttons">
+          <button type="button" id="register-button">register</button>
+          <button type="button" id="register-cancel">cancel</button>
+        </div>
+      </form>
+    </div>
+    <div id="food-items" style="display:none;">
+      <p id="food-items-message"></p>
+      <table id="food-items-table">
+        <tr id="food-items-table-header">
+          <th id="table-header-name">Name</th>
+          <th id="table-header-brand">Brand</th>
+          <th id="table-header-mealtime">Meal Time</th>
+          <th id="table-header-amount">Amount</th>
+          <th id="table-header-date">Date</th>
+          <th id="table-header-calories">Calorie Amount</th>
+          <th id="table-header-comments">Comments</th>
+          <th id="table-header-actions" colspan="2"></th>
+        </tr>
+      </table>
+      <div id="default-buttons">
+        <button type="button" id="add-food-item-button">add food item</button>
+        <button type="button" id="logoff-button">log off</button>
+      </div>
+    </div>
+    <div id="edit-food-item" style="display:none;">
+      <form id="add-food-item-form">
+        <div class="add-food-item-field">
+          <label for="name">name<span class="asterisk">*</span>:</label>
+          <input type="text" id="foodName" />
+        </div>
+        <div class="add-food-item-field">
+          <label for="brand">brand:</label>
+          <input type="text" id="brand" />
+        </div>
+        <div class="add-food-item-field">
+          <label for="mealTime">meal time:</label>
+          <select id="mealTime">
+            <option value="breakfast">breakfast</option>
+            <option value="second_breakfast">second breakfast</option>
+            <option value="lunch">lunch</option>
+            <option value="after_lunch">after lunch</option>
+            <option value="dinner">dinner</option>
+            <option value="late_dinner">late dinner</option>
+            <option value="midnight_crave">midnight crave</option>
+          </select>
+        </div>
+        <div class="add-food-item-field">
+          <label for="calories">calories<span class="asterisk">*</span>:</label>
+          <input type="text" id="calories" />
+        </div>
+        <div class="add-food-item-field" id="food-item-amount">
+          <div id="food-item-quantity">
+            <label for="quantity">quantity<span class="asterisk">*</span>:</label>
+            <input type="text" id="quantity" />
+          </div>
+          <div id="food-item-unit">
+            <label for="unit">unit<span class="asterisk">*</span>:</label>
+            <select id="unit">
+              <option value="oz">oz</option>
+              <option value="g">g</option>
+              <option value="lb">lb</option>
+              <option value="glass">glass</option>
+              <option value="qt">qt</option>
+              <option value="gal">gal</option>
+              <option value="cup">cup</option>
+              <option value="fl_oz">fl oz</option>
+              <option value="teaspoonful">teaspoonful</option>
+              <option value="small_bowl">small bowl</option>
+              <option value="large_bowl">large bowl</option>
+              <option value="just_a_pinch_it_doesnt_count">just a pinch it doesn't count</option>
+            </select>
+          </div>
+        </div>
+        <div class="add-food-item-field">
+          <label for="consume-date">consume date<span class="asterisk">*</span>:</label>
+          <input type="date" id="consume-date" />
+        </div>
+        <div class="add-food-item-field">
+          <label for="comments">comments:</label>
+          <input type="text" id="comments" />
+        </div>
+        <div id="add-food-item-buttons">
+          <button type="button" id="adding-food-item">add</button>
+          <button type="button" id="edit-cancel">cancel</button>
+        </div>
+      </form>
+    </div>
+    <footer id="swagger">
+      <div class="'swagger"><img src="files/swagger_logo.svg" height="50" width="174" alt="Swagger Logo"><br><a
+          href="/api-docs" target="_blank" id="swagger_link">Swagger Documentation</a></div>
+    </footer>
+    <script src="./js/index.js" type="module"></script>
+  </main>
+</body>
+
+</html>

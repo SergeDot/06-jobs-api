@@ -37,9 +37,7 @@ app.use(helmet());
 app.use(cors());
 app.use(xss());
 
-app.get('/', (req, res) => {
-  res.send('<h1>Calorie Tracker API</h1><h2><a href="/api-docs">Documentation</a></h2>');
-});
+app.use(express.static("public"));
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 // routes

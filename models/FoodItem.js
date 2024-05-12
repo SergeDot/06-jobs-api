@@ -33,7 +33,7 @@ const FoodItemSchema = new mongoose.Schema(
         type: String,
         required: [true, 'please provide the serving size'],
         enum: {
-          values: ['oz', 'g', 'lb', 'glass', 'qt', 'gal', 'cup', 'fl oz', 'teaspoonful', 'small_bowl', 'large_bowl', 'just_a_pinch_it_doesnt_count'],
+          values: ['oz', 'g', 'lb', 'glass', 'qt', 'gal', 'cup', 'fl_oz', 'teaspoonful', 'small_bowl', 'large_bowl', 'just_a_pinch_it_doesnt_count'],
           message: '{VALUE} not supported'
         }
       }
@@ -56,4 +56,4 @@ const FoodItemSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model('FoodItem', FoodItemSchema);
+export default mongoose.model('Food-Item', FoodItemSchema);
